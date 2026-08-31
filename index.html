@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dominique Würgler: IT Service Management mit Fokus Automatisierung</title>
+<meta name="description" content="Dominique Würgler: IT Service Management mit Fokus Automatisierung. Drei Fallstudien mit Zahlen.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="head">
+  <h1>Dominique Würgler</h1>
+  <p class="positionierung">IT Service Management mit Fokus Automatisierung</p>
+  <p class="satz">Ich sorge dafür, dass Service-Prozesse und Ticketsysteme sich selbst rapportieren und Routinearbeit automatisiert läuft. Ich finde die Stellen, wo Arbeit liegen bleibt, baue die Lösung und erkläre sie so, dass das Team sie wirklich nutzt.</p>
+</header>
+
+<main>
+  <section aria-labelledby="profil">
+    <h2 id="profil">Kurzprofil</h2>
+    <p>Über zehn Jahre IT-Betrieb und IT Service Management (ITSM), durchgehend bei einem Managed Service Provider. Der Weg führte vom System Engineer über die Geschäftsleitung zurück in die fachliche Tiefe: das war eine bewusste Entscheidung für Prozess- und Automatisierungsarbeit statt für Personalführung. Was seither entstanden ist, steht unten.</p>
+    <p>Ich arbeite nah am Betrieb. Die drei Beispiele auf dieser Seite sind nicht aus Projektbudgets entstanden, sondern aus Reibung im Tagesgeschäft: etwas dauerte zu lange, blieb liegen oder fand faktisch nicht statt. Ich baue die Automatisierung, dokumentiere sie und übergebe sie so, dass sie ohne mich weiterläuft.</p>
+    <p>Zum Arbeiten selbst nutze ich ein eigenes, dateibasiertes Wissens- und Automatisierungssystem mit Obsidian und Claude Code.</p>
+  </section>
+
+  <section aria-labelledby="fallstudie-1">
+    <h2 id="fallstudie-1">Management-Reports schreibt niemand mehr von Hand</h2>
+    <p><strong>Kontext:</strong> Service Desk eines Schweizer IT-Dienstleisters. Rund 950 Tickets pro Monat, rund 50 Agents, rund 270 Kundenorganisationen im Ticketsystem (Zammad).</p>
+    <p><strong>Das Problem:</strong> Der wöchentliche Management-Report entstand von Hand. Rohdatenaufbereitung rund 15 Minuten, danach baute ein Kundenberater den fertigen Report daraus, 30 bis 60 Minuten. Pro Report also 45 bis 75 Minuten, verteilt auf zwei Rollen. Der Kundenreport für die Bilanzgespräche kostete zusätzlich 30 bis 45 Minuten pro Kunde. Reports entstanden spät, und die Frage, warum bestimmte Themen lange offen bleiben, kam erst in der Besprechung auf den Tisch.</p>
+    <p><strong>Was ich gebaut habe:</strong> Eine Report-Suite auf der Zammad-API, die Management-, Kunden- und Agent-Reports als fertige Word-Dokumente erzeugt. Der Management-Report läuft wöchentlich, der Kundenreport ein- bis zweimal pro Monat.</p>
+    <p><strong>Das Ergebnis:</strong></p>
+    <ul>
+      <li>Management-Report: rund 6 Sekunden Laufzeit statt 45 bis 75 Minuten Handarbeit, rund 4,3 Mal pro Monat</li>
+      <li>Kundenreport: rund 60 Sekunden Laufzeit statt 30 bis 45 Minuten pro Kunde</li>
+      <li>Zusammen rund 3,75 bis 6,9 Stunden pro Monat, die nicht mehr in die Erstellung fliessen</li>
+      <li>Der Report ist heute die Grundlage der Team-Besprechung, nicht mehr deren Nachbereitung</li>
+    </ul>
+    <p class="womit">Womit: Zammad-API, JavaScript, automatisierte Word-Generierung.</p>
+  </section>
+
+  <section aria-labelledby="fallstudie-2">
+    <h2 id="fallstudie-2">Eskalationen in Sekunden statt über Zuruf</h2>
+    <p><strong>Kontext:</strong> 2nd- und 3rd-Level-Eskalationen im selben Service Desk. Eskaliert wird über einen Tag im Ticket, informiert werden muss das zuständige Team.</p>
+    <p><strong>Das Problem:</strong> Ein gesetzter Tag ist nur dann eine Eskalation, wenn ihn jemand sieht. Die Weitergabe hing an Aufmerksamkeit und Zuruf. Wer gerade nicht ins Ticketsystem schaute, erfuhr von der Eskalation später oder gar nicht.</p>
+    <p><strong>Was ich gebaut habe:</strong> Zwei n8n-Workflows, je einer für 2nd und 3rd Level. Sie reagieren auf den Tag im Ticket und melden die Eskalation automatisch in den Team-Chat (Mattermost), mit Link direkt ins Ticket.</p>
+    <p><strong>Das Ergebnis:</strong></p>
+    <ul>
+      <li>Rund 58 Eskalationen pro Monat laufen über die beiden Workflows</li>
+      <li>Vom Tag im Ticket bis zur Meldung im Team-Chat vergehen im Schnitt unter 4 Sekunden</li>
+      <li>Die Eskalation ist damit nicht mehr davon abhängig, dass jemand zur richtigen Zeit hinschaut</li>
+    </ul>
+    <p class="womit">Womit: n8n, Zammad-Trigger, Mattermost-Webhooks.</p>
+  </section>
+
+  <section aria-labelledby="fallstudie-3">
+    <h2 id="fallstudie-3">Die Meldung, die den Fehler anzeigen sollte, war selbst defekt</h2>
+    <p><strong>Kontext:</strong> Wartungszyklen auf Server-Umgebungen von Kunden, ausgeführt über bestehende AWX-Jobs (Ansible). Die Update- und Wartungs-Playbooks selbst stammen nicht von mir, was ich gebaut habe, liegt darüber.</p>
+    <p><strong>Das Problem:</strong> Ob ein Wartungszyklus hinterlegt war und ob er fehlerfrei durchlief, stand nur verstreut in AWX-Job-Logs und wurde über eine handgepflegte Liste nachgehalten. Genau die Meldung, die einen Fehlschlag hätte anzeigen sollen, war selbst unzuverlässig. Dadurch blieb der tatsächliche Zustand über Jahre unsichtbar, unabhängig davon, wie viel Zeit jemand in die manuelle Prüfung gesteckt hätte.</p>
+    <p><strong>Was ich gebaut habe:</strong> Das Dashboard von der handgepflegten Liste auf Auto-Discovery aus der AWX-API umgestellt. Die Zahlen sind damit nicht mehr geschätzt, sondern direkt aus dem System abgeleitet: pro Umgebung sichtbar, ob ein Wartungszyklus hinterlegt ist und ob er fehlerfrei durchläuft, mit Direktlink in den jeweiligen AWX-Job und einer Funktion, die daraus per Klick ein Ticket für den Techniker erzeugt.</p>
+    <p><strong>Das Ergebnis:</strong></p>
+    <ul>
+      <li>Rund drei Viertel der Produktions-Server-Umgebungen haben einen Wartungszyklus hinterlegt (41 von 54)</li>
+      <li>Von den eingerichteten Wartungen laufen nur 17 von 64 tatsächlich fehlerfrei durch, ein Zustand, der vorher niemand sichtbar war</li>
+      <li>Die Fehlschläge liessen sich auf vier eingegrenzte Ursachen zurückführen, ein grosser Teil davon auf zwei einzelne Vorlagen</li>
+      <li>Werkzeug und Befund gehen als dokumentierte Übergabe mit eingegrenzter Ursachenliste an die nächste zuständige Person</li>
+    </ul>
+    <p><strong>Ehrlich dazu:</strong> Die Quote gilt für das Aufbewahrungsfenster von AWX, nicht für die gesamte Historie. Und eine fehlende Wartung ist nicht automatisch ein Versäumnis, weil Zyklen erst von Hand eingetragen werden, sobald sie mit dem Kunden vereinbart sind.</p>
+    <p class="womit">Womit: AWX-API, JavaScript, Mattermost- und Ticketsystem-Anbindung.</p>
+  </section>
+
+  <section aria-labelledby="kontakt">
+    <h2 id="kontakt">Kontakt</h2>
+    <p><a href="mailto:wuergler.dominique@gmail.com">wuergler.dominique@gmail.com</a></p>
+    <p><a href="https://www.linkedin.com/in/dominique-w%C3%BCrgler-209081166" rel="me">linkedin.com/in/dominique-würgler-209081166</a></p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>&copy; 2026 Dominique Würgler</p>
+</footer>
+</body>
+</html>
