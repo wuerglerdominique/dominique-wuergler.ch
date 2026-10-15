@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dominique Würgler: IT Service Management mit Fokus Automatisierung</title>
-<meta name="description" content="Dominique Würgler: IT Service Management mit Fokus Automatisierung. Drei Fallstudien mit Zahlen.">
+<title>Dominique Würgler: Prozessautomatisierung &amp; IT Service Management</title>
+<meta name="description" content="Dominique Würgler: Prozessautomatisierung &amp; IT Service Management. Drei Fallstudien mit Zahlen.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="head">
   <h1>Dominique Würgler</h1>
-  <p class="positionierung">IT Service Management mit Fokus Automatisierung</p>
+  <p class="positionierung">Prozessautomatisierung &amp; IT Service Management</p>
   <p class="satz">Ich sorge dafür, dass Service-Prozesse und Ticketsysteme sich selbst rapportieren und Routinearbeit automatisiert läuft. Ich finde die Stellen, wo Arbeit liegen bleibt, baue die Lösung und erkläre sie so, dass das Team sie wirklich nutzt.</p>
 </header>
 
@@ -18,8 +18,9 @@
   <section aria-labelledby="profil">
     <h2 id="profil">Kurzprofil</h2>
     <p>Über zehn Jahre IT-Betrieb und IT Service Management (ITSM), durchgehend bei einem Managed Service Provider. Der Weg führte vom System Engineer über die Geschäftsleitung zurück in die fachliche Tiefe: das war eine bewusste Entscheidung für Prozess- und Automatisierungsarbeit statt für Personalführung. Was seither entstanden ist, steht unten.</p>
-    <p>Ich arbeite nah am Betrieb. Die drei Beispiele auf dieser Seite sind nicht aus Projektbudgets entstanden, sondern aus Reibung im Tagesgeschäft: etwas dauerte zu lange, blieb liegen oder fand faktisch nicht statt. Ich baue die Automatisierung, dokumentiere sie und übergebe sie so, dass sie ohne mich weiterläuft.</p>
-    <p>Zum Arbeiten selbst nutze ich ein eigenes, dateibasiertes Wissens- und Automatisierungssystem mit Obsidian und Claude Code.</p>
+    <p>Ich arbeite nah am Betrieb. Die drei Beispiele auf dieser Seite sind nicht aus Projektbudgets entstanden, sondern aus Reibung im Tagesgeschäft: etwas dauerte zu lange, blieb liegen oder ging an die falschen Leute. Ich baue die Automatisierung, dokumentiere sie und übergebe sie so, dass sie ohne mich weiterläuft. Was ich baue, läuft auf Servern im Betrieb und nicht auf meinem Laptop: als Docker-Container, mit Login über Keycloak und AD-Gruppen, der Code in GitLab.</p>
+    <p>Ich messe, bevor ich baue. Für einen Dispatch-Assistenten zeigte die Messung an 1'684 Tickets, dass die verlangten 95 Prozent Treffsicherheit für die Ticketart nicht erreichbar sind. Der Assistent übernimmt deshalb nur die Zuweisung.</p>
+    <p>Ich entwickle täglich mit KI-Agenten (Claude Code) und prüfe jedes Ergebnis selbst, bevor es produktiv geht.</p>
   </section>
 
   <section aria-labelledby="fallstudie-1">
@@ -38,33 +39,33 @@
   </section>
 
   <section aria-labelledby="fallstudie-2">
-    <h2 id="fallstudie-2">Eskalationen in Sekunden statt über Zuruf</h2>
-    <p><strong>Kontext:</strong> 2nd- und 3rd-Level-Eskalationen im selben Service Desk. Eskaliert wird über einen Tag im Ticket, informiert werden muss das zuständige Team.</p>
-    <p><strong>Das Problem:</strong> Ein gesetzter Tag ist nur dann eine Eskalation, wenn ihn jemand sieht. Die Weitergabe hing an Aufmerksamkeit und Zuruf. Wer gerade nicht ins Ticketsystem schaute, erfuhr von der Eskalation später oder gar nicht.</p>
-    <p><strong>Was ich gebaut habe:</strong> Zwei n8n-Workflows, je einer für 2nd und 3rd Level. Sie reagieren auf den Tag im Ticket und melden die Eskalation automatisch in den Team-Chat (Mattermost), mit Link direkt ins Ticket.</p>
+    <h2 id="fallstudie-2">Die Eskalation erreicht die Person mit Bereitschaft, nicht alle</h2>
+    <p><strong>Kontext:</strong> Incidents hoher Priorität im selben Service Desk. Wer gerade Bereitschaft hat, steht im Einsatzplan.</p>
+    <p><strong>Das Problem:</strong> Jede Eskalationsmeldung ging an alle Bereitschaftsrollen gleichzeitig, in der Regel elf Personen. Auch jede Aktualisierung zum selben Incident löste eine neue Rundmeldung aus. Wer nicht zuständig war, wurde trotzdem gestört, und wer zuständig war, musste die eigene Meldung aus dem Rauschen fischen. Herabstufung, Entwarnung und Abschluss eines Incidents wurden gar nicht gemeldet.</p>
+    <p><strong>Was ich gebaut habe:</strong> n8n-Workflows, die beim Incident die diensthabende Person aus dem Einsatzplan lesen und nur sie erwähnen, je nach Priorität eine oder zwei Personen. Aktualisierungen laufen als Antwort im selben Thread, ohne neue Erwähnung. Neu gemeldet werden auch Herabstufung, Entwarnung und Abschluss.</p>
     <p><strong>Das Ergebnis:</strong></p>
     <ul>
-      <li>Rund 58 Eskalationen pro Monat laufen über die beiden Workflows</li>
-      <li>Vom Tag im Ticket bis zur Meldung im Team-Chat vergehen im Schnitt unter 4 Sekunden</li>
-      <li>Die Eskalation ist damit nicht mehr davon abhängig, dass jemand zur richtigen Zeit hinschaut</li>
+      <li>In den 18 Tagen vor der Umstellung gab es 411 Personenbenachrichtigungen. Mit dem neuen Ablauf wären es für dieselben Meldungen unter 40 gewesen, ein Rückgang um mindestens 90 Prozent</li>
+      <li>Die Meldung ist gezielter und zugleich vollständiger: Der ganze Verlauf eines Incidents steht in einem Thread</li>
+      <li>Nach demselben Muster laufen die 2nd- und 3rd-Level-Eskalationen: rund 58 pro Monat, im Schnitt unter 4 Sekunden vom Tag im Ticket bis zur Meldung im Team-Chat</li>
     </ul>
-    <p class="womit">Womit: n8n, Zammad-Trigger, Mattermost-Webhooks.</p>
+    <p><strong>Ehrlich dazu:</strong> Die 411 sind gemessen. Die Zahl danach ist eine Obergrenze aus dem Aufbau, gerechnet so, als wäre jede Meldung ein eigener Incident. Gemessen werden Benachrichtigungen, nicht eingesparte Arbeitszeit.</p>
+    <p class="womit">Womit: n8n, Zammad-Trigger, Einsatzplan, Mattermost.</p>
   </section>
 
   <section aria-labelledby="fallstudie-3">
-    <h2 id="fallstudie-3">Die Meldung, die den Fehler anzeigen sollte, war selbst defekt</h2>
+    <h2 id="fallstudie-3">Wartungsüberwachung auf einen Blick statt Job für Job</h2>
     <p><strong>Kontext:</strong> Wartungszyklen auf Server-Umgebungen von Kunden, ausgeführt über bestehende AWX-Jobs (Ansible). Die Update- und Wartungs-Playbooks selbst stammen nicht von mir, was ich gebaut habe, liegt darüber.</p>
-    <p><strong>Das Problem:</strong> Ob ein Wartungszyklus hinterlegt war und ob er fehlerfrei durchlief, stand nur verstreut in AWX-Job-Logs und wurde über eine handgepflegte Liste nachgehalten. Genau die Meldung, die einen Fehlschlag hätte anzeigen sollen, war selbst unzuverlässig. Dadurch blieb der tatsächliche Zustand über Jahre unsichtbar, unabhängig davon, wie viel Zeit jemand in die manuelle Prüfung gesteckt hätte.</p>
-    <p><strong>Was ich gebaut habe:</strong> Das Dashboard von der handgepflegten Liste auf Auto-Discovery aus der AWX-API umgestellt. Die Zahlen sind damit nicht mehr geschätzt, sondern direkt aus dem System abgeleitet: pro Umgebung sichtbar, ob ein Wartungszyklus hinterlegt ist und ob er fehlerfrei durchläuft, mit Direktlink in den jeweiligen AWX-Job und einer Funktion, die daraus per Klick ein Ticket für den Techniker erzeugt.</p>
+    <p><strong>Das Problem:</strong> Ob eine Wartung sauber durchgelaufen war, liess sich nur Schritt für Schritt prüfen: Übersicht öffnen, pro Kunde die fehlgeschlagene Software suchen, dann im AWX-Job die genaue Fehlermeldung nachlesen. Das kostete rund 5 bis 10 Minuten pro Kunde. Welche Umgebungen überhaupt einen Wartungszyklus haben, stand in einer handgepflegten Liste.</p>
+    <p><strong>Was ich gebaut habe:</strong> Ein Dashboard über den bestehenden AWX-Jobs. Es findet die Wartungszyklen selbst über die AWX-API, statt sie aus einer Liste zu lesen. Pro Kunde zeigt es fehlgeschlagene Updates mit Grund, verlinkt direkt in den Job und erzeugt per Klick ein Ticket für den Techniker. Ist zum selben Fehler schon ein Ticket offen, entsteht kein zweites.</p>
     <p><strong>Das Ergebnis:</strong></p>
     <ul>
-      <li>Rund drei Viertel der Produktions-Server-Umgebungen haben einen Wartungszyklus hinterlegt (41 von 54)</li>
-      <li>Von den eingerichteten Wartungen laufen nur 17 von 64 tatsächlich fehlerfrei durch, ein Zustand, der vorher niemand sichtbar war</li>
+      <li>Die Prüfung, die vorher 5 bis 10 Minuten pro Kunde kostete, ist eine Übersicht auf einen Blick</li>
+      <li>Neue Wartungszyklen erscheinen automatisch, die handgepflegte Liste entfällt</li>
       <li>Die Fehlschläge liessen sich auf vier eingegrenzte Ursachen zurückführen, ein grosser Teil davon auf zwei einzelne Vorlagen</li>
-      <li>Werkzeug und Befund gehen als dokumentierte Übergabe mit eingegrenzter Ursachenliste an die nächste zuständige Person</li>
+      <li>Das Dashboard läuft zentral auf einem Server im Betrieb und geht mit Dokumentation an die nächste zuständige Person</li>
     </ul>
-    <p><strong>Ehrlich dazu:</strong> Die Quote gilt für das Aufbewahrungsfenster von AWX, nicht für die gesamte Historie. Und eine fehlende Wartung ist nicht automatisch ein Versäumnis, weil Zyklen erst von Hand eingetragen werden, sobald sie mit dem Kunden vereinbart sind.</p>
-    <p class="womit">Womit: AWX-API, JavaScript, Mattermost- und Ticketsystem-Anbindung.</p>
+    <p class="womit">Womit: AWX-API, JavaScript (Node.js), Docker, Mattermost- und Ticketsystem-Anbindung.</p>
   </section>
 
   <section aria-labelledby="kontakt">
