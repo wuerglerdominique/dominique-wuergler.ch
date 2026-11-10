@@ -2,6 +2,8 @@
 
 Statische Portfolio-Seite. Kein Build-Schritt, kein JavaScript, keine externen Fonts, keine Analytics.
 
+Seiten: `index.html` (Portfolio) und `datenschutz.html` (Datenschutzerklärung, verlinkt in der Fusszeile; Google verlangt sie für die eigene OAuth-App "n8n Mail-Eingang" im Produktionsmodus).
+
 ## Lokal testen
 
 ```
